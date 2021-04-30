@@ -1,7 +1,7 @@
 {
-  "name": "after-swipe",
-  "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "name": "@shilovp/after-swipe",
+  "version": "0.0.3",
+  "description": "Swiper for usage from anywhere",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.mjs",
@@ -24,5 +24,20 @@
   "dependencies": {
     "@stencil/core": "^2.0.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@stencil/angular-output-target": "0.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shilovp/after-swipe.git"
+  },
+  "keywords": [
+    "swipe"
+  ],
+  "author": "shilovp",
+  "bugs": {
+    "url": "https://github.com/shilovp/after-swipe/issues"
+  },
+  "homepage": "https://github.com/shilovp/after-swipe#readme"
 }
