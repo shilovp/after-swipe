@@ -95,7 +95,7 @@ export class AfterSwipeComponent {
             }}>{price}</div>
             <div>{this.resolveCurrency()} / Month</div>
             <div>
-              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => {this.currentChoice = this.innerPrices[index]}}>accept</a> : ''}
+              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => {this.currentChoice = this.innerPrices[index]; this.flicky.select(index)}}>accept</a> : ''}
             </div>
             
           </div>
