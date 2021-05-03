@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
+    "@types/flickity": "^2.2.4",
     "@types/node": "^15.0.1",
     "flickity": "^2.2.2"
   },

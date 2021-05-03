@@ -7,6 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AfterSwipe {
+        "currency": string;
+        "currentChoice": string;
+        "prices": string;
+        "theme": string;
     }
     interface MyComponent {
         /**
@@ -43,6 +47,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AfterSwipe {
+        "currency"?: string;
+        "currentChoice"?: string;
+        "prices"?: string;
+        "theme"?: string;
     }
     interface MyComponent {
         /**

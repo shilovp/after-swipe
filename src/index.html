@@ -5,16 +5,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>Stencil Component Starter</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
   <script type="module" src="/build/after-swipe.esm.js"></script>
 </head>
 
 <body>
-  <div>
-    <after-swipe></after-swipe>
+  <div class="container">
+    <div>
+      <after-swipe currency="us-dollar" current-choice="55" prices="10,20,50,55,120,180,220,375"></after-swipe>
+    </div>
+
   </div>
 </body>
 <style>
+  .container {
+    width: 44%;
+    margin-inline: auto;
+    display: block;
 
+    font-family: 'Roboto Mono', monospace;
+  }
 </style>
 
 </html>
