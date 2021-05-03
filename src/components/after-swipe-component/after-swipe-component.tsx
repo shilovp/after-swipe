@@ -73,6 +73,10 @@ export class AfterSwipeComponent {
       prevNextButtons: false,
       pageDots: false,
     });
+    
+    let index = this.innerPrices.indexOf(this.currentChoice);
+
+    this.flicky.select(index);
 
     this.flicky.on('change', this.onCellChange);
   }
@@ -89,7 +93,7 @@ export class AfterSwipeComponent {
 
         {this.innerPrices.map((price, index) => {
           return <div class="carousel-cell">
-            <div>{price === this.currentChoice ? 'Current choice' : ''}</div>
+            <div class="current-choice-header">{price === this.currentChoice ? 'Current choice' : ''}</div>
             <div class={{
               'selected-price': price === this.currentChoice,
             }}>{price}</div>
@@ -97,7 +101,6 @@ export class AfterSwipeComponent {
             <div>
               {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => {this.currentChoice = this.innerPrices[index]; this.flicky.select(index)}}>accept</a> : ''}
             </div>
-            
           </div>
         })}
       </div>
