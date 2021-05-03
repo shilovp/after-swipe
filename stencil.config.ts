@@ -7,6 +7,8 @@ const angularValueAccessorBindings: ValueAccessorConfig[] = [
 
 export const config: Config = {
   namespace: 'after-swipe',
+  globalScript: 'src/assets/flickity/js/flickity.pkgd.min.js',
+  globalStyle: 'src/assets/flickity/css/flickity.css',
   outputTargets: [
     {
       type: 'dist',
@@ -26,6 +28,7 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+     
     },
   ],
 };
