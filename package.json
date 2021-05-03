@@ -1,6 +1,6 @@
 {
   "name": "@shilovp/after-swipe",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "description": "Swiper for usage from anywhere",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -22,7 +22,9 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@stencil/core": "^2.0.1"
+    "@stencil/core": "^2.0.1",
+    "@types/node": "^15.0.1",
+    "flickity": "^2.2.2"
   },
   "license": "MIT",
   "devDependencies": {
