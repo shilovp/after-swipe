@@ -18,7 +18,10 @@ export class AfterSwipeComponent {
   @Prop({ mutable: true })
   prices = '';
 
-  innerPrices = [];
+  @Prop()
+  currentChoice = "-";
+
+  innerPrices = []; // stencil not allowing us to pass arrays / lists of objects as a param, so we need local buuffer
 
   @Watch('prices')
   parseData() {
@@ -27,13 +30,8 @@ export class AfterSwipeComponent {
     }
   }
 
-  @Prop()
-  currentChoice = "-";
-
   currencySign = '$';
-
   currentCell = 0;
-
   flicky;
 
 
@@ -52,13 +50,10 @@ export class AfterSwipeComponent {
     script.src = src;
 
     document.head.appendChild(script);
-
-
   }
 
   connectedCallback() {
     this.innerPrices = this.prices.split(',');
-    console.log('data? ', this.prices.split(','));
   }
 
   resolveCurrency() {
@@ -73,10 +68,9 @@ export class AfterSwipeComponent {
       prevNextButtons: false,
       pageDots: false,
     });
-    
-    let index = this.innerPrices.indexOf(this.currentChoice);
 
-    this.flicky.select(index);
+    let index = this.innerPrices.indexOf(this.currentChoice);
+    this.flicky.select(index); // Show current choice price by default. We can also watch input property and update selected value based on that
 
     this.flicky.on('change', this.onCellChange);
   }
@@ -86,11 +80,14 @@ export class AfterSwipeComponent {
     console.log('cell: ', this.currentCell);
   }
 
+  acceptNewPrice(index){
+    this.currentChoice = this.innerPrices[index]; this.flicky.select(index)
+  } 
+
   render() {
     return <div class="after-container">
       <div class="carousel"
       >
-
         {this.innerPrices.map((price, index) => {
           return <div class="carousel-cell">
             <div class="current-choice-header">{price === this.currentChoice ? 'Current choice' : ''}</div>
@@ -99,7 +96,7 @@ export class AfterSwipeComponent {
             }}>{price}</div>
             <div>{this.resolveCurrency()} / Month</div>
             <div>
-              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => {this.currentChoice = this.innerPrices[index]; this.flicky.select(index)}}>accept</a> : ''}
+              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => { this.acceptNewPrice(index) }}>accept</a> : ''}
             </div>
           </div>
         })}
