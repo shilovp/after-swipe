@@ -1,4 +1,6 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop, Watch } from '@stencil/core';
+import Flickity from 'flickity';
+
 
 @Component({
   tag: 'after-swipe',
@@ -6,6 +8,32 @@ import { Component, h } from '@stencil/core';
   shadow: false,
 })
 export class AfterSwipeComponent {
+
+  @Prop({ mutable: true })
+  theme: string = 'aqua';
+
+  @Prop({ mutable: true })
+  currency: string = 'us-dollar';
+
+  @Prop({ mutable: true })
+  prices = '';
+
+  @Prop()
+  currentChoice = "-";
+
+  innerPrices = []; // stencil not allowing us to pass arrays / lists of objects as a param, so we need local buuffer
+
+  @Watch('prices')
+  parseData() {
+    if (this.prices) {
+      this.innerPrices = this.prices.split(',');
+    }
+  }
+
+  currencySign = '$';
+  currentCell = 0;
+  flicky;
+
 
   // this is needed to load the external script and put it to head of a hosting app
   // for the some reason global script config in a stencil configuration file does not work as expected
@@ -22,25 +50,57 @@ export class AfterSwipeComponent {
     script.src = src;
 
     document.head.appendChild(script);
-
-    console.log('document ref: ', script);
   }
 
   connectedCallback() {
-    
+    this.innerPrices = this.prices.split(',');
   }
 
-  render() {
-    return <div>
-      <div class="carousel"
-        data-flickity='{ "wrapAround": true }'>
-        <div class="carousel-cell">1</div>
-        <div class="carousel-cell">2</div>
-        <div class="carousel-cell">3</div>
-        <div class="carousel-cell">4</div>
-        <div class="carousel-cell">5</div>
-      </div>
+  resolveCurrency() {
+    switch (this.currency) {
+      case 'us-dollar': return '$';
+      case 'eu-euro': return '€';
+    }
+  }
 
+  componentDidRender() {
+    this.flicky = new Flickity('.carousel', {
+      prevNextButtons: false,
+      pageDots: false,
+    });
+
+    let index = this.innerPrices.indexOf(this.currentChoice);
+    this.flicky.select(index); // Show current choice price by default. We can also watch input property and update selected value based on that
+
+    this.flicky.on('change', this.onCellChange);
+  }
+
+  onCellChange(index) {
+    this.currentCell = index;
+    console.log('cell: ', this.currentCell);
+  }
+
+  acceptNewPrice(index){
+    this.currentChoice = this.innerPrices[index]; this.flicky.select(index)
+  } 
+
+  render() {
+    return <div class="after-container">
+      <div class="carousel"
+      >
+        {this.innerPrices.map((price, index) => {
+          return <div class="carousel-cell">
+            <div class="current-choice-header">{price === this.currentChoice ? 'Current choice' : ''}</div>
+            <div class={{
+              'selected-price': price === this.currentChoice,
+            }}>{price}</div>
+            <div>{this.resolveCurrency()} / Month</div>
+            <div>
+              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => { this.acceptNewPrice(index) }}>accept</a> : ''}
+            </div>
+          </div>
+        })}
+      </div>
     </div>;
   }
 }
