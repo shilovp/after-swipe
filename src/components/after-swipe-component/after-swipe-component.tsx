@@ -1,6 +1,6 @@
-import { Component, h, Prop, Watch } from '@stencil/core';
+import { Component, h, Prop, Watch, Event, EventEmitter } from '@stencil/core';
 import Flickity from 'flickity';
-
+import { Options } from './options-interface';
 
 @Component({
   tag: 'after-swipe',
@@ -9,26 +9,29 @@ import Flickity from 'flickity';
 })
 export class AfterSwipeComponent {
 
-  @Prop({ mutable: true })
-  theme: string = 'aqua';
+  private _options: Options;
 
   @Prop({ mutable: true })
-  currency: string = 'us-dollar';
+  options: Options | string;
 
-  @Prop({ mutable: true })
-  prices = '';
-
-  @Prop()
-  currentChoice = "-";
-
-  innerPrices = []; // stencil not allowing us to pass arrays / lists of objects as a param, so we need local buuffer
-
-  @Watch('prices')
-  parseData() {
-    if (this.prices) {
-      this.innerPrices = this.prices.split(',');
+  @Watch('options')
+  optionsDataWatcher(newValue: Options | string) {
+    if (typeof newValue === 'string') {
+      this._options = JSON.parse(newValue);
+    }
+    else {
+      this._options = newValue;
     }
   }
+
+  @Event(
+    {
+      eventName: 'onPriceAccepted',
+      composed: true,
+      cancelable: true,
+      bubbles: true,
+    }
+  ) priceAccepted: EventEmitter<string>;
 
   currencySign = '$';
   currentCell = 0;
@@ -50,26 +53,25 @@ export class AfterSwipeComponent {
     script.src = src;
 
     document.head.appendChild(script);
-  }
-
-  connectedCallback() {
-    this.innerPrices = this.prices.split(',');
+    this.optionsDataWatcher(this.options);
   }
 
   resolveCurrency() {
-    switch (this.currency) {
+    switch (this._options.currency) {
       case 'us-dollar': return '$';
       case 'eu-euro': return '€';
     }
   }
 
   componentDidRender() {
+    console.log('options: ', this._options);
+    console.log('options prop: ', this.options);
     this.flicky = new Flickity('.carousel', {
       prevNextButtons: false,
       pageDots: false,
     });
 
-    let index = this.innerPrices.indexOf(this.currentChoice);
+    let index = this._options.prices.indexOf(this._options.currentChoice);
     this.flicky.select(index); // Show current choice price by default. We can also watch input property and update selected value based on that
 
     this.flicky.on('change', this.onCellChange);
@@ -80,23 +82,25 @@ export class AfterSwipeComponent {
     console.log('cell: ', this.currentCell);
   }
 
-  acceptNewPrice(index){
-    this.currentChoice = this.innerPrices[index]; this.flicky.select(index)
-  } 
+  acceptNewPrice(index) {
+    //this._options.currentChoice = this._options.prices[index];
+    //this.flicky.select(index);
+    this.priceAccepted.emit(index);
+  }
 
   render() {
     return <div class="after-container">
       <div class="carousel"
       >
-        {this.innerPrices.map((price, index) => {
+        {this._options.prices.map((price, index) => {
           return <div class="carousel-cell">
-            <div class="current-choice-header">{price === this.currentChoice ? 'Current choice' : ''}</div>
+            <div class="current-choice-header">{price === this._options.currentChoice ? 'Current choice' : ''}</div>
             <div class={{
-              'selected-price': price === this.currentChoice,
+              'selected-price': price === this._options.currentChoice,
             }}>{price}</div>
             <div>{this.resolveCurrency()} / Month</div>
             <div>
-              {price !== this.currentChoice ? <a class="accept-price-btn" onClick={() => { this.acceptNewPrice(index) }}>accept</a> : ''}
+              {price !== this._options.currentChoice ? <a class="accept-price-btn" onClick={() => { this.acceptNewPrice(price) }}>accept</a> : ''}
             </div>
           </div>
         })}

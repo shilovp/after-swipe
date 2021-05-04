@@ -5,12 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Options } from "./components/after-swipe-component/options-interface";
 export namespace Components {
     interface AfterSwipe {
-        "currency": string;
-        "currentChoice": string;
-        "prices": string;
-        "theme": string;
+        "options": Options | string;
     }
     interface MyComponent {
         /**
@@ -47,10 +45,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AfterSwipe {
-        "currency"?: string;
-        "currentChoice"?: string;
-        "prices"?: string;
-        "theme"?: string;
+        "onOnPriceAccepted"?: (event: CustomEvent<string>) => void;
+        "options"?: Options | string;
     }
     interface MyComponent {
         /**
