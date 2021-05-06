@@ -1,7 +1,20 @@
 @import url("../../assets/flickity/css/flickity.css");
 
-:root {
-    --color-primary: rgb(30, 107, 27);
+.aqua {
+    --color-primary: rgb(7, 163, 253);
+    --color-secondary: rgb(97, 177, 223);
+}
+.fire {
+    --color-primary: rgb(235, 37, 37);
+    --color-secondary: rgb(230, 100, 100);
+}
+.air {
+    --color-primary: rgb(154, 228, 206);
+    --color-secondary: rgb(207, 241, 231);
+}
+.earth {
+    --color-primary: rgb(114, 66, 26);
+    --color-secondary: rgb(161, 113, 73);
 }
 
 * {
@@ -28,7 +41,7 @@
     opacity: 0.5;
     font-size: 1.125rem;
 
-    color: rgb(66, 57, 57);
+    color: black;
 }
 
 .carousel-cell:before {
@@ -51,8 +64,8 @@
 }
 
 .selected-price {
-    font-size: 2.125rem;
-    color: rgb(30, 107, 27);
+    font-size: 2.325rem;
+    color: var(--color-secondary);
 }
 
 .accept-price-btn {
@@ -61,5 +74,5 @@
 }
 
 .current-choice-header {
-    color: rgb(30, 107, 27);
+    color: var(--color-primary);
 }

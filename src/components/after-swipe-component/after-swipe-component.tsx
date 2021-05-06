@@ -26,7 +26,7 @@ export class AfterSwipeComponent {
 
   @Event(
     {
-      eventName: 'onPriceAccepted',
+      eventName: 'priceAccepted',
       composed: true,
       cancelable: true,
       bubbles: true,
@@ -79,20 +79,17 @@ export class AfterSwipeComponent {
 
   onCellChange(index) {
     this.currentCell = index;
-    console.log('cell: ', this.currentCell);
   }
 
   acceptNewPrice(index) {
-    //this._options.currentChoice = this._options.prices[index];
-    //this.flicky.select(index);
     this.priceAccepted.emit(index);
   }
 
   render() {
-    return <div class="after-container">
+    return <div class={{ 'air': this._options.theme === 'air', 'earth': this._options.theme === 'earth', 'fire': this._options.theme === 'fire', 'aqua': this._options.theme === 'aqua', 'after-container': true}}>
       <div class="carousel"
       >
-        {this._options.prices.map((price, index) => {
+        {this._options.prices.map((price) => {
           return <div class="carousel-cell">
             <div class="current-choice-header">{price === this._options.currentChoice ? 'Current choice' : ''}</div>
             <div class={{

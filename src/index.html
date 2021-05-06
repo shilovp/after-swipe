@@ -24,12 +24,13 @@
 
   el.setAttribute("options", JSON.stringify(options));
 
-  el.addEventListener("onPriceAccepted", (e) => {
-    console.log(e);
+  el.addEventListener("priceAccepted", (e) => {
+    console.log("event: ", e);
     options.currentChoice = e.detail;  // the value of an output event from component
     console.log(options);
     el.setAttribute("options", JSON.stringify(options));
   });
+
 </script>
 <style>
   body {

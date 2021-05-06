@@ -45,7 +45,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AfterSwipe {
-        "onOnPriceAccepted"?: (event: CustomEvent<string>) => void;
+        "onPriceAccepted"?: (event: CustomEvent<string>) => void;
         "options"?: Options | string;
     }
     interface MyComponent {
