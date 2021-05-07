@@ -17,12 +17,14 @@ Please, check [NPM](https://www.npmjs.com/package/@shilovp/after-swipe) reposito
 
 Component has an `options` parameter, which has following structure(You can use JSON string as an input or a Typescript object):
 
-`{`
-`theme: string,` 
-`currency: string,` 
-`prices: number[],`
-`currentChoice: number`
-`}`
+```javascript
+{
+theme: string,
+currency: string,
+prices: number[],
+currentChoice: number
+}
+```
 
 ### Parameters
 
@@ -43,21 +45,26 @@ You need to have a listener for this event in your host application and refer to
 ## Usage example in Vanialla JS: 
 
 - HTML
-
-`<after-swipe id="swiper"></after-swipe>`
+```html
+<after-swipe id="swiper"></after-swipe>
+```
 
 - JS (bind data)
 
-`const el = document.getElementById('swiper');`
-`var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55, "emitOnChange": true }`
-`el.setAttribute("options", JSON.stringify(options));`
+```javascript
+const el = document.getElementById('swiper');
+var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55, "emitOnChange": true }
+el.setAttribute("options", JSON.stringify(options));
+```
 
 - JS listen event
 
-`el.addEventListener("priceAccepted", (e) => {`
-`options.currentChoice = e.detail; // That is how you cna sync selected price with your host app data`
-`el.setAttribute("options", JSON.stringify(options)); // sync back`
-`}`
+```javascript
+el.addEventListener("priceAccepted", (e) => {
+options.currentChoice = e.detail; // That is how you cna sync selected price with your host app data
+el.setAttribute("options", JSON.stringify(options)); // sync back
+}
+```
 
 # Setup
 
