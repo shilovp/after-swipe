@@ -7,12 +7,16 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type     | Default       |
-| --------------- | ---------------- | ----------- | -------- | ------------- |
-| `currency`      | `currency`       |             | `string` | `'us-dollar'` |
-| `currentChoice` | `current-choice` |             | `string` | `"-"`         |
-| `prices`        | `prices`         |             | `string` | `''`          |
-| `theme`         | `theme`          |             | `string` | `'aqua'`      |
+| Property  | Attribute | Description | Type                | Default     |
+| --------- | --------- | ----------- | ------------------- | ----------- |
+| `options` | `options` |             | `Options \| string` | `undefined` |
+
+
+## Events
+
+| Event           | Description | Type                  |
+| --------------- | ----------- | --------------------- |
+| `priceAccepted` |             | `CustomEvent<string>` |
 
 
 ----------------------------------------------

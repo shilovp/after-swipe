@@ -4,8 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>Stencil Component Starter</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <title>Stencil: Swipe component</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
   <script type="module" src="/build/after-swipe.esm.js"></script>
@@ -13,15 +12,34 @@
 
 <body>
   <div class="container">
-      <after-swipe currency="us-dollar" current-choice="55" prices="10,20,50,55,120,180,220,375"></after-swipe>
+    <after-swipe id="sw"></after-swipe>
   </div>
 </body>
+
+<script>
+  const el = document.getElementById('sw');
+
+  var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55, "emitOnChange": true }
+
+  el.setAttribute("options", JSON.stringify(options));
+
+  el.addEventListener("priceAccepted", (e) => {
+    console.log("event: ", e);
+    options.currentChoice = e.detail;  // the value of an output event from component
+    console.log(options);
+    el.setAttribute("options", JSON.stringify(options));
+  });
+
+</script>
 <style>
+  body {
+    font-family: 'Roboto Mono', monospace;
+  }
+
   .container {
     width: 44%;
     margin-inline: auto;
     display: block;
-    font-family: 'Roboto Mono', monospace;
   }
 </style>
 
