@@ -1,75 +1,190 @@
-![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)
+# AfterSwipe 🚀
 
-# Stencil Component Starter
+DEMO / Test project. 
 
-This is a starter project for building a standalone Web Component using Stencil.
+## What is the project about ? 
 
-Stencil is also great for building entire apps. For that, use the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) instead.
+This is responsive web-component built with Stencil which can be used along with Angular, VueJS or React frameworks. And of course from vanilla Javascript.
+More about Stencil you can read [here](https://stenciljs.com/).
 
-# Stencil
+Component is a simple price picker which can be customized with theme colors, currency and items to display. As a feedback from a component you are getting the price selected by a user, which can be used in a Host application.
 
-Stencil is a compiler for building fast web apps using Web Components.
+Please, check [NPM](https://www.npmjs.com/package/@shilovp/after-swipe) repository as well. 
 
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
+# API 
 
-Stencil components are just Web Components, so they work in any major framework or with no framework at all.
+## Inputs
 
-## Getting Started
+Component has an `options` parameter, which has following structure(You can use JSON string as an input or a Typescript object):
 
-To start building a new web component using Stencil, clone this repo to a new directory:
+`{`
+`theme: string,` 
+`currency: string,` 
+`prices: number[],`
+`currentChoice: number`
+`}`
 
-```bash
-git clone https://github.com/ionic-team/stencil-component-starter.git my-component
-cd my-component
-git remote rm origin
+### Parameters
+
+- Theme - accepts parameters `aqua | earth | fire | air`
+- Currency - accepts two codes `$ | €`
+- Prices - accepts an arrya of numbers, example: `[10, 20, 55....]`
+- CurrentChoice - accepts number, should be an available option from prices array. 
+
+## Events
+
+Component listen to accept value button and sending back to Host application selected value. 
+
+- priceAccepted - event name. 
+
+You need to have a listener for this event in your host application and refer to event details to get a value (examples bellow)
+
+
+## Usage example in Vanialla JS: 
+
+- HTML
+
+`<after-swipe id="swiper"></after-swipe>`
+
+- JS (bind data)
+
+`const el = document.getElementById('swiper');`
+`var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55, "emitOnChange": true }`
+`el.setAttribute("options", JSON.stringify(options));`
+
+- JS listen event
+
+`el.addEventListener("priceAccepted", (e) => {`
+`options.currentChoice = e.detail; // That is how you cna sync selected price with your host app data`
+`el.setAttribute("options", JSON.stringify(options)); // sync back`
+`}`
+
+# Setup
+
+## Sanbox / Stencil 
+
+You can setup and run component in a Stencil sandbox to make some changes or investigate functionality. 
+
+To do so you need to have NodeJS and npm installed, preferably latest versions. 
+Here is your 3 commands to run: 
+
+`git clone https://github.com/shilovp/after-swipe.git`
+
+Go to `aftr-swipe` folder. 
+
+`npm install`
+`npm start`
+
+Application will be started on `localhost:3333`
+
+## Production / Angular
+
+To start using the component from Angular, you need to do following steps: 
+
+1. Install component using npm: 
+`npm i @shilovp/after-swipe@1.0.2`
+
+2. Adjust soem setting in your Angular app: 
+
+
+    Include the `CUSTOM_ELEMENTS_SCHEMA` in the modules that use the components.
+    Call `defineCustomElements()` from `main.ts` (or some other appropriate place).
+
+```javascript
+import { BrowserModule } from '@angular/platform-browser';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}
+
 ```
 
-and run:
+A component collection built with `Stencil` includes a main function that is used to load the components in the collection. That function is called `defineCustomElements()` and it needs to be called once during the bootstrapping of your application. One convenient place to do this is in `main.ts` as such:
 
-```bash
-npm install
-npm start
+```javascript
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+// Note: loader import location set using "esmLoaderPath" within the output target config
+import { defineCustomElements } from '@shilovp/after-swipe/loader';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.log(err));
+defineCustomElements();
 ```
 
-To build the component for production, run:
 
-```bash
-npm run build
+3. Now you can use it in your application. 
+
+Just use following selector: 
+
+```html 
+   <after-swipe id="swiper" (priceAccepted)="onPriceAccepted($event)"></after-swipe>
 ```
 
-To run the unit tests for the components, run:
+## Production / Vue
 
-```bash
-npm test
+1. Install component using npm: 
+`npm i @shilovp/after-swipe@1.0.2`
+
+
+2. Adjust soem setting in your Vue app: 
+
+`main.js`
+
+```javascript
+
+
+import Vue from 'vue';
+import App from './App.vue';
+
+import { applyPolyfills, defineCustomElements } from '@shilovp/after-swipe/loader';
+
+Vue.config.productionTip = false;
+
+// Tell Vue to ignore all components defined in the test-components
+// package. The regex assumes all components names are prefixed
+// 'test'
+Vue.config.ignoredElements = [/test-\w*/];
+
+// Bind the custom elements to the window object
+applyPolyfills().then(() => {
+  defineCustomElements();
+});
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app');
 ```
 
-Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
+3. Now you can use the component from your Vue component 
 
+```javascript
+render() {
+  return (
+    <div>
+      <after-swipe id="swiper" @priceAccepted="onPriceAccepted"></after-swipe>
+    </div>
+  )
+}
+```
 
-## Naming Components
+# DEMO 
 
-When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!
-
-Instead, use a prefix that fits your company or any name for a group of related components. For example, all of the Ionic generated web components use the prefix `ion`.
-
-
-## Using this component
-
-There are three strategies we recommend for using web components built with Stencil.
-
-The first step for all three of these strategies is to [publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages).
-
-### Script tag
-
-- Put a script tag similar to this `<script src='https://unpkg.com/my-component@0.0.1/dist/my-component.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### Node Modules
-- Run `npm install my-component --save`
-- Put a script tag similar to this `<script src='node_modules/my-component/dist/my-component.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### In a stencil-starter app
-- Run `npm install my-component --save`
-- Add an import to the npm packages `import my-component;`
-- Then you can use the element anywhere in your template, JSX, html etc
+You can check live demo [here](https://after-swipe-demo.firebaseapp.com/). Demo implemented using Angular. Component from this project is used there to show some simple use-case.
+Deployment is hosted by Firebase.
