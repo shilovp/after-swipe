@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>Stencil: Swipe component</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
   <script type="module" src="/build/after-swipe.esm.js"></script>
 </head>
@@ -20,7 +19,7 @@
 <script>
   const el = document.getElementById('sw');
 
-  var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55 }
+  var options = { "theme": "aqua", "currency": "us-dollar", "prices": [10, 15, 22, 25, 50, 55, 125, 200, 375, 500, 1500], "currentChoice": 55, "emitOnChange": true }
 
   el.setAttribute("options", JSON.stringify(options));
 

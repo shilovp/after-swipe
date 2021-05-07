@@ -34,7 +34,6 @@ export class AfterSwipeComponent {
   ) priceAccepted: EventEmitter<string>;
 
   currencySign = '$';
-  currentCell = 0;
   flicky;
 
 
@@ -73,20 +72,14 @@ export class AfterSwipeComponent {
 
     let index = this._options.prices.indexOf(this._options.currentChoice);
     this.flicky.select(index); // Show current choice price by default. We can also watch input property and update selected value based on that
-
-    this.flicky.on('change', this.onCellChange);
   }
 
-  onCellChange(index) {
-    this.currentCell = index;
-  }
-
-  acceptNewPrice(index) {
-    this.priceAccepted.emit(index);
+  acceptNewPrice(price) {
+    this.priceAccepted.emit(price);
   }
 
   render() {
-    return <div class={{ 'air': this._options.theme === 'air', 'earth': this._options.theme === 'earth', 'fire': this._options.theme === 'fire', 'aqua': this._options.theme === 'aqua', 'after-container': true}}>
+    return <div class={{ 'air': this._options.theme === 'air', 'earth': this._options.theme === 'earth', 'fire': this._options.theme === 'fire', 'aqua': this._options.theme === 'aqua', 'after-container': true }}>
       <div class="carousel"
       >
         {this._options.prices.map((price) => {
